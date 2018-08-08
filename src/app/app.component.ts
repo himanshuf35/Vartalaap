@@ -3,14 +3,9 @@ import { Observable } from 'rxjs';
 import {AuthService,GoogleLoginProvider} from 'angular-6-social-login';
 import { HttpHeaders, HttpClient,HttpParams } from '@angular/common/http';
 import {stringify} from 'querystring'
+import {ChatserviceService} from './chatservice.service'
 
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/x-www-form-urlencoded',
-    'Authorization': 'Basic QUNjZWRhYTlkMDQ0ZWU3NmNkM2I2MDEwYmUzZDc2YWRhMzo4MWFiOTlhOWMyNDg2MDU1NTg5YjMwM2FjNmI5NjlmOQ=='
-  })
-};
 
 
 
@@ -22,12 +17,10 @@ const httpOptions = {
 export class AppComponent {
 
   // querystring = require('querystring');
+  sid:string;
                                                      
-    
-  clientidentity:string='112421427329768291872';
-  title = 'Vartalaap';
-  Url="https://chat.twilio.com/v2/Services";
-  constructor(private googleauthservice:AuthService,private http:HttpClient)
+  
+  constructor(private googleauthservice:AuthService,private chatservice:ChatserviceService)
   {}
   
   public googlesignin()
@@ -39,15 +32,20 @@ export class AppComponent {
         localStorage.setItem("facebookdata",JSON.stringify(userdata));
       }
     );
-    var subs=this.apicall();
+    let url="https://chat.twilio.com/v2/Services"
+    var subs=this.chatservice.getapicall(url);
+    subs.subscribe(data=>{console.log(data.services[0].sid)
+      this.sid=data.services[0].sid;
+      console.log(this.sid);
+    }
+  );
+  }
+ 
+  public showChannel()
+  {
+    let url="https://chat.twilio.com/v2/Services/"+this.sid+"/Channels";
+    var subs=this.chatservice.getapicall(url);
     subs.subscribe(data=>console.log(data));
   }
-  data={FriendlyName:"Sabha"};
-  public apicall():Observable<any>
-  {
-    const body = new HttpParams()
-    .set('FriendlyName', 'Sabha');
-    return this.http.post(this.Url,body.toString(),httpOptions)
-    
-  }
+  
 }
