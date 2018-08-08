@@ -22,7 +22,11 @@
     "@angular/router": "^6.1.0",
     "angular-6-social-login": "^1.1.1",
     "core-js": "^2.5.4",
+    "crypto": "^1.0.1",
+    "query-string": "^6.1.0",
     "rxjs": "^6.0.0",
+    "twilio": "^3.19.0",
+    "twilio-chat": "^3.0.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
