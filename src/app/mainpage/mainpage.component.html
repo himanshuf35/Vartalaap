@@ -19,10 +19,7 @@
     </button>
      <br>
      <br>
-    
-    <input type="text" [(ngModel)]="message"> 
-    <button (click)="sendMessage()">Send</button>
-    <br>
+
 
     <div>
       <ul>
@@ -38,4 +35,9 @@
     <div id="container">
       here are we
 
+    </div>
+    <br>
+    <div *ngIf="messageinputbool">
+    <input type="text" [(ngModel)]="message"> 
+    <button (click)="sendMessage()">Send</button>
     </div>

@@ -23,6 +23,7 @@ export class MainpageComponent implements OnInit {
   identity:string
   username:string
   bool:boolean
+  messageinputbool:boolean
   inputchannelname:string
 
 
@@ -49,6 +50,7 @@ export class MainpageComponent implements OnInit {
     subs.subscribe(data => {
       this.open_channel_id=data.sid;
       this.showMessages(data.sid);
+      this.messageinputbool=true;
 
     });
   }
