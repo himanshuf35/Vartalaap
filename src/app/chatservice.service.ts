@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const baseURL="https://chat.twilio.com/v2/Services/";
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -22,16 +23,18 @@ export class ChatserviceService {
   Url = "https://chat.twilio.com/v2/Services";
 
   //function for post apicall 
-  public postapicall(): Observable<any> {
-    const body = new HttpParams()
-      .set('FriendlyName', 'Sabha').set('UniqueName','panchayat2');
-    return this.http.post(this.Url, body.toString(), httpOptions)
+  public postapicall(getURL:string,body:HttpParams): Observable<any> {
+    let URL=baseURL+getURL;
+    console.log(URL)
+    return this.http.post(URL, body.toString(), httpOptions)
+    //console.log(URL);
 
   }
 
   //function for get apicall
   public getapicall(getURL:string): Observable<any> {
-    return this.http.get(getURL, httpOptions);
+    let URL=baseURL+getURL
+    return this.http.get(URL, httpOptions);
   }
 
   // public CreateUserapicall()
