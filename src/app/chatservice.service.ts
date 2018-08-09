@@ -15,6 +15,9 @@ const httpOptions = {
 })
 export class ChatserviceService {
 
+  identity:string
+  username:string
+
   constructor(public http: HttpClient) { }
 
   clientidentity: string = '112421427329768291872';
@@ -42,5 +45,24 @@ export class ChatserviceService {
   //   url=
   //   return this.http.post()
   // }
+
+  public setID(id)
+  {
+   this.identity=id;
+  }
+  public setUsername(us_name)
+  {
+    this.username=us_name;
+  }
+
+  public getID()
+  {
+      return this.identity;
+  }
+
+  public getUsername()
+  {
+    return this.username;
+  }
 
 }
