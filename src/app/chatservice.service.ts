@@ -40,12 +40,6 @@ export class ChatserviceService {
     return this.http.get(URL, httpOptions);
   }
 
-  // public CreateUserapicall()
-  // {
-  //   url=
-  //   return this.http.post()
-  // }
-
   public setID(id)
   {
    this.identity=id;
