@@ -7,7 +7,7 @@ Check
 <button (click)="createChannel()">
 createChannel
 </button>
-<button (click)="showChannel()">
+<button (click)="ChannelList()">
   Show Channel
 </button>
 <button (click)="createUser()">
@@ -22,6 +22,16 @@ join a channel
 
 <div>
   <p>
-    <button (click)="showMessages()">Show</button>
+    <button (click)="OpenChannel()">Show</button>
   </p>
+</div>
+<div>
+  <ul>
+    
+    <li *ngFor="let channel of channels" [id]=channel>
+      <button (click)="OpenChannel(channel)">
+       {{channel}}
+      </button>
+    </li>
+  </ul>
 </div>

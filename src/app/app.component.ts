@@ -21,6 +21,8 @@ export class AppComponent {
   sid: string;
   message: string;
   recievemessage: string
+  channels:Array<string>=[];
+  member_name:string
 
 
 
@@ -68,10 +70,13 @@ export class AppComponent {
     //this.createUser();
   }
 
-  public showChannel() {
-    let url = "" + this.sid + "/Channels";
+  public OpenChannel(channel_name) {
+    let url = "" + this.sid + "/Channels/"+channel_name;
     let subs = this.chatservice.getapicall(url);
-    subs.subscribe(data => console.log(data));
+    subs.subscribe(data => {
+      this.showMessages(data.sid);
+
+    });
   }
 
   public createChannel() {
@@ -111,9 +116,9 @@ export class AppComponent {
     subs.subscribe(data => console.log(data));
   }
 
-  public showMessages() {
+  public showMessages(channel_id) {
     let message_count
-    let channel_id = "CH198e34fe5a314699990a2867939d0457";
+    //let channel_id= "CH198e34fe5a314699990a2867939d0457";
     let sendURL = "" + this.sid + "/Channels/" + channel_id + "/Messages";
     let histsendURL = "" + this.sid + "/Channels/" + channel_id;
     let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', channel_id).set('Body', this.message);
@@ -174,9 +179,22 @@ export class AppComponent {
     let subs = this.chatservice.getapicall(url);
     subs.subscribe(data =>{
     
-      data.channels.forEach(element => {
+      data.channels.forEach(element1 => {
 
-        let searchURL=""+this.sid+"/Channels/"+element.sid+"/Members";
+        let searchURL=""+this.sid+"/Channels/"+element1.sid+"/Members";
+        let apihit=this.chatservice.getapicall(searchURL);
+        apihit.subscribe(data=>
+          {
+            data.members.forEach(element2 => {
+              if(element2.identity==="112421427329768291872")
+              {
+                console.log(element1.unique_name);
+                this.channels.push(element1.unique_name);
+                console.log(this.channels);
+              }
+
+            });
+          })
         
       });
 
