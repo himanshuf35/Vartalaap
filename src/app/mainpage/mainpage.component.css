@@ -1,14 +1,18 @@
 
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
-.textbox {
-    border: 2px solid #6b6565;
-    background-color: #7e3c3c;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
-}
+
 ul
 {
     list-style-type: none;
+}
+#sidebar
+{
+    float: left;
+    width:30%;
+}
+#messagecontainer
+{
+    float: right;
+    width:70%;
 }

@@ -1,0 +1,28 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+#sbutton
+{
+    background: #dd4b39;
+    color:white;
+    width:200px;
+}
+#signin
+{
+align-content:center;
+position: absolute;
+left:43%;
+right:45%;
+top:30%
+}
+#header
+{
+    background:rebeccapurple;
+    height:150px;
+}
+#text
+{   margin-top:15px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    width:200px;
+}

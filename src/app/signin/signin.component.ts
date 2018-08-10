@@ -5,6 +5,8 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
 import {Router} from '@angular/router'
+import {LoginserviceService} from '../loginservice.service';
+
 
 @Component({
   selector: 'app-signin',
@@ -22,7 +24,7 @@ export class SigninComponent implements OnInit {
   identity:string
   username:string
 
-  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router) { }
+  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router,private login:LoginserviceService) { }
 
   ngOnInit() {
   }
@@ -32,6 +34,7 @@ export class SigninComponent implements OnInit {
     this.googleauthservice.signIn(GoogleLoginProvider.PROVIDER_ID).then
       (
       (userdata) => {
+        console.log(userdata);
         console.log("facebook" + " sign in data : ", userdata.id.toString());
         this.chatservice.setID(userdata.id.toString());
         this.chatservice.setUsername(userdata.name.toString());
@@ -39,6 +42,7 @@ export class SigninComponent implements OnInit {
         this.username=userdata.name.toString();
         console.log(this.identity);
         console.log(this.username);
+        this.login.setLogin(userdata);
 
         localStorage.setItem("facebookdata", JSON.stringify(userdata));
       }

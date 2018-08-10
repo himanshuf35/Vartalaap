@@ -5,6 +5,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
 
+
 @Component({
   selector: 'app-mainpage',
   templateUrl: './mainpage.component.html',
@@ -117,7 +118,7 @@ export class MainpageComponent implements OnInit {
         data.messages.forEach(element => {
           console.log(element.body)
           let text = document.createElement("DIV");
-          text.setAttribute("class", "textbox");
+          text.setAttribute("class", "alert alert-success");
           let t = document.createTextNode(element.body);
           text.appendChild(t);
           document.getElementById("container").appendChild(text);

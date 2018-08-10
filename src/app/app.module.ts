@@ -8,6 +8,7 @@ import {GoogleLoginProvider,AuthServiceConfig, SocialLoginModule} from "angular-
 import {HttpClientModule} from '@angular/common/http';
 import { SigninComponent } from './signin/signin.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
+import {LoginguardGuard} from './loginguard.guard'
 
 
 const routes:Routes=[
@@ -20,7 +21,8 @@ const routes:Routes=[
 },
 {
   path:'mainpage',
-  component:MainpageComponent
+  component:MainpageComponent,
+  canActivate:[LoginguardGuard]
 }
 
 ]
