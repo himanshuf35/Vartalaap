@@ -19,6 +19,7 @@ export class MainpageComponent implements OnInit {
   message: string;
   recievemessage: string
   channels: Array<string> = [];
+  MessagesArray:Array<string>= [];
   member_name: string
   open_channel_id: string
   identity: string
@@ -42,7 +43,6 @@ export class MainpageComponent implements OnInit {
     console.log(this.sid);
     this.ChannelList();
 
-
   }
   public OpenChannel(channel_name) {
     document.getElementById("container").innerHTML = "";
@@ -57,7 +57,7 @@ export class MainpageComponent implements OnInit {
   }
 
   public channelcreation() {
-    this.bool = true;
+    this.bool=!this.bool ;
   }
 
   public createChannel() {
@@ -97,7 +97,7 @@ export class MainpageComponent implements OnInit {
   public sendMessage() {
 
     let sendURL = "" + this.sid + "/Channels/" + this.open_channel_id + "/Messages";
-    let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message);
+    let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity);
     let subs = this.chatservice.postapicall(sendURL, body);
     subs.subscribe(data => console.log(data));
   }
@@ -117,17 +117,29 @@ export class MainpageComponent implements OnInit {
       subs.subscribe(data => {
         data.messages.forEach(element => {
           console.log(element.body)
-          let text = document.createElement("DIV");
-          text.setAttribute("class", "alert alert-success");
+          this.MessagesArray.push(element.body);
+          let text = document.createElement("div");
+          console.log("#"+element.from);
+          if(element.from===this.identity)
+          {
+            text.setAttribute("class", "mybox");
+          }
+          else
+          {
+            text.setAttribute("class", "otherbox");
+          }
+          
+         // text.setAttribute("style","")
           let t = document.createTextNode(element.body);
           text.appendChild(t);
           document.getElementById("container").appendChild(text);
         });
+       
       });
 
 
     });
-
+      
     let ob = new Observable(observe => {
       setInterval(call => {
 
@@ -143,12 +155,22 @@ export class MainpageComponent implements OnInit {
             subs.subscribe(data => {
               for (let i = message_count; i < next.messages_count; i++) {
                 console.log(data.messages[i].body);
+                this.MessagesArray.push(data.messages[i].body);
                 let text = document.createElement("div");
+                if(data.messages[i].from===this.identity)
+          {
+            text.setAttribute("class", "mybox");
+          }
+          else
+          {
+            text.setAttribute("class", "otherbox");
+          }
                 let t = document.createTextNode(data.messages[i].body);
                 text.appendChild(t);
                 document.getElementById("container").appendChild(text);
               }
               message_count = next.messages_count
+              
             });
           }
         });

@@ -2,10 +2,18 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 
-ul
+:host::ng-deep.mybox
 {
-    list-style-type: none;
+    border:1px solid;
+    text-align: right
 }
+
+:host::ng-deep.otherbox
+{
+    border:1px solid;
+    text-align: left
+}
+
 #sidebar
 {
     float: left;
@@ -15,4 +23,36 @@ ul
 {
     float: right;
     width:70%;
+}
+input[type="text"]
+{
+    width:100%;
+    
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
 }

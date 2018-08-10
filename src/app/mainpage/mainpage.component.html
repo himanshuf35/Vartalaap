@@ -7,6 +7,7 @@
     <div *ngIf="bool">
 
       <input type="text" [(ngModel)]="inputchannelname">
+      <br>
     <button (click)="createChannel()">
       create
     </button>
@@ -14,18 +15,17 @@
   <br>
   <br>
   <input type="text" [(ngModel)]="member_name">
+  <br>
   <button (click)="JoinAChannel()">
   join a channel
   </button>
    <br>
    <br>
    <div>
-    <ul class="list-group">
+    <ul>
       
-      <li *ngFor="let channel of channels" [id]=channel class="list-group-item"> 
-        <button class="btn"(click)="OpenChannel(channel)">
-         {{channel}}
-        </button>
+      <li *ngFor="let channel of channels" [id]=channel> 
+        <a (click)="OpenChannel(channel)">{{channel}}</a>
       </li>
     </ul>
   </div>
@@ -41,6 +41,14 @@
     <div id="messagecontainer">
     <div id="container">
       here are we
+      <ul>
+      
+        <li *ngFor="let Messgage of MessagesArray"> 
+          
+           {{Messgage}}
+          
+        </li>
+      </ul>
 
     </div>
     <br>
