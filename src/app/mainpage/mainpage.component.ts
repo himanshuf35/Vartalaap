@@ -4,12 +4,14 @@ import { AuthService, GoogleLoginProvider } from 'angular-6-social-login';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
+import {ViewEncapsulation} from '@angular/core'
 
 
 @Component({
   selector: 'app-mainpage',
   templateUrl: './mainpage.component.html',
-  styleUrls: ['./mainpage.component.css']
+  styleUrls: ['./mainpage.component.css'],
+  //encapsulation: ViewEncapsulation.None
 })
 export class MainpageComponent implements OnInit {
 
@@ -45,7 +47,7 @@ export class MainpageComponent implements OnInit {
 
   }
   public OpenChannel(channel_name) {
-    document.getElementById("container").innerHTML = "";
+    document.getElementById("Container").innerHTML = "";
     let url = "" + this.sid + "/Channels/" + channel_name;
     let subs = this.chatservice.getapicall(url);
     subs.subscribe(data => {
@@ -132,7 +134,7 @@ export class MainpageComponent implements OnInit {
          // text.setAttribute("style","")
           let t = document.createTextNode(element.body);
           text.appendChild(t);
-          document.getElementById("container").appendChild(text);
+          document.getElementById("Container").appendChild(text);
         });
        
       });
@@ -167,7 +169,7 @@ export class MainpageComponent implements OnInit {
           }
                 let t = document.createTextNode(data.messages[i].body);
                 text.appendChild(t);
-                document.getElementById("container").appendChild(text);
+                document.getElementById("Container").appendChild(text);
               }
               message_count = next.messages_count
               

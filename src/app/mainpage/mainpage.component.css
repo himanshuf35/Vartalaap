@@ -17,7 +17,10 @@
 #sidebar
 {
     float: left;
-    width:30%;
+    color:white;
+    width:25%;
+    background:rebeccapurple;
+    height: 650px;
 }
 #messagecontainer
 {
@@ -33,18 +36,21 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 25%;
-    background-color: #f1f1f1;
-    position: fixed;
+    width: auto;
+    /* background-color: #f1f1f1; */
+    /* position: fixed; */
     height: 100%;
-    overflow: auto;
-}
+     /* overflow: auto; */
+} 
 
 li a {
     display: block;
-    color: #000;
+    color:white;
     padding: 8px 16px;
-    text-decoration: none;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 15px;
+    text-decoration-color: aliceblue;
+
 }
 
 li a.active {
@@ -56,3 +62,4 @@ li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
+

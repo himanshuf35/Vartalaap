@@ -6,12 +6,14 @@ import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
 import {Router} from '@angular/router'
 import {LoginserviceService} from '../loginservice.service';
+import {ViewEncapsulation} from '@angular/core'
 
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  styleUrls: ['./signin.component.css'],
+  //encapsulation: ViewEncapsulation.None
 })
 export class SigninComponent implements OnInit {
 
