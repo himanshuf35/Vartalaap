@@ -2,36 +2,50 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 
-:host::ng-deep.mybox
+.mybox
 {
-    border:1px solid;
+    border: 2px solid #dedede;
+    background-color: #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
     text-align: right
 }
 
-:host::ng-deep.otherbox
+.otherbox
 {
-    border:1px solid;
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
     text-align: left
 }
 
 #sidebar
 {
+    position:fixed;
     float: left;
     color:white;
     width:25%;
     background:rebeccapurple;
-    height: 650px;
+    height: 800px;
+    padding: 8px 16px;
+
 }
 #messagecontainer
 {
     float: right;
-    width:70%;
+    width:75%;
+    padding:10px;
+
+
 }
-input[type="text"]
+/* input[type="text"]
 {
     width:100%;
     
-}
+} */
 ul {
     list-style-type: none;
     margin: 0;
@@ -39,15 +53,15 @@ ul {
     width: auto;
     /* background-color: #f1f1f1; */
     /* position: fixed; */
-    height: 100%;
+    height: auto;
      /* overflow: auto; */
 } 
 
 li a {
     display: block;
     color:white;
-    padding: 8px 16px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top:8px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
     text-decoration-color: aliceblue;
 
@@ -62,4 +76,57 @@ li a:hover:not(.active) {
     background-color: #555;
     color: white;
 }
+body
+{
+    margin:0px;
+}
+.padding
+{
+    padding: 8px 16px; 
+}
+input[type="text"] {
+    background:  10px 6px #fcfcfc;
+    /* background-image: url("assets/images/magnifying-glass.png"); */
+    border: 1px solid #d1d1d1;
+    font: bold 12px Arial,Helvetica,Sans-serif;
+    color: #bebebe;
+    width: 100%;
+    padding: 6px 15px;
+    /* -webkit-border-radius: 20px;
+    -moz-border-radius: 20px; */
+    border-radius: 20px; 
+    /* text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s; */
+    }
+
+    #search{
+        width:400px;
+        float: right;
+    }
+    #Container
+    {
+      margin-top:50px;
+    }
+    #Sresult
+    {
+       background-color:white;
+       border:1px solid;
+    } 
+    #opchannel
+    {
+       float:left;
+       font-size: 20px;
+       font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    #channel_heading
+    {
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 

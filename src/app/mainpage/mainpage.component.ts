@@ -5,30 +5,40 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
 import {ViewEncapsulation} from '@angular/core'
-
+import { elementStyleProp } from '../../../node_modules/@angular/core/src/render3/instructions';
+import {Renderer2} from '@angular/core';
+import { BrowserDynamicTestingModule } from '../../../node_modules/@angular/platform-browser-dynamic/testing';
 
 @Component({
   selector: 'app-mainpage',
   templateUrl: './mainpage.component.html',
   styleUrls: ['./mainpage.component.css'],
-  //encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  
 })
 export class MainpageComponent implements OnInit {
 
-  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService) { }
+  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService) 
+  { 
+    
+  }
 
   sid: string;
   message: string;
   recievemessage: string
   channels: Array<string> = [];
-  MessagesArray:Array<string>= [];
-  member_name: string
+  MessagesArray:Array<string>
+  //member_name: string
   open_channel_id: string
   identity: string
   username: string
   bool: boolean
   messageinputbool: boolean
   inputchannelname: string
+  searchresult:Array<string>
+  searchkeyup:boolean
+  text_to_search:string
+  opened_channel:string
 
 
 
@@ -47,6 +57,7 @@ export class MainpageComponent implements OnInit {
 
   }
   public OpenChannel(channel_name) {
+    this.opened_channel=channel_name;
     document.getElementById("Container").innerHTML = "";
     let url = "" + this.sid + "/Channels/" + channel_name;
     let subs = this.chatservice.getapicall(url);
@@ -70,17 +81,22 @@ export class MainpageComponent implements OnInit {
     let body = new HttpParams()
       .set('FriendlyName', friendly_name).set('UniqueName', unique_name);
     let subs = this.chatservice.postapicall(sendURL, body);
-    subs.subscribe(data => console.log(data));
-    this.channels.push(unique_name);
+    subs.subscribe(data => {
+      console.log(data);
+      this.JoinAChannel(unique_name);
+
+    });
+    //this.channels.push(unique_name);
+    
     this.bool = false;
   }
 
 
 
-  public JoinAChannel() {
+  public JoinAChannel(channel_name) {
     let channel_id;
 
-    let channel_url = "" + this.sid + "/Channels/" + this.member_name;
+    let channel_url = "" + this.sid + "/Channels/" + channel_name;
     let channel_sub = this.chatservice.getapicall(channel_url);
     channel_sub.subscribe(data => {
       channel_id = data.sid;
@@ -90,22 +106,23 @@ export class MainpageComponent implements OnInit {
       let body = new HttpParams().set('Identity', this.identity).set('FriendlyName', this.username).set('ServiceSid', this.sid).set('ChannelSid', channel_id);
       let subs = this.chatservice.postapicall(sendURL, body);
       subs.subscribe(data => console.log(data));
-      this.channels.push(this.member_name);
+      this.channels.push(channel_name);
 
     });
 
   }
 
   public sendMessage() {
-
+    let json={'Name':this.username};
     let sendURL = "" + this.sid + "/Channels/" + this.open_channel_id + "/Messages";
-    let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity);
+    let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity).set('Attributes',JSON.stringify(json));
     let subs = this.chatservice.postapicall(sendURL, body);
     subs.subscribe(data => console.log(data));
   }
 
   public showMessages(channel_id) {
     let message_count
+    let message_sender
 
     let sendURL = "" + this.sid + "/Channels/" + channel_id + "/Messages";
     let histsendURL = "" + this.sid + "/Channels/" + channel_id;
@@ -119,7 +136,7 @@ export class MainpageComponent implements OnInit {
       subs.subscribe(data => {
         data.messages.forEach(element => {
           console.log(element.body)
-          this.MessagesArray.push(element.body);
+          //this.MessagesArray.push(element.body);
           let text = document.createElement("div");
           console.log("#"+element.from);
           if(element.from===this.identity)
@@ -132,6 +149,12 @@ export class MainpageComponent implements OnInit {
           }
           
          // text.setAttribute("style","")
+         let name_span=document.createElement("span")
+         //console.log(element.attributes);
+         //let User=JSON.parse(element.attributes);
+        //  let name=document.createTextNode(element.attributes);
+        //   name_span.appendChild(name)
+        //   text.appendChild(name_span)
           let t = document.createTextNode(element.body);
           text.appendChild(t);
           document.getElementById("Container").appendChild(text);
@@ -157,7 +180,7 @@ export class MainpageComponent implements OnInit {
             subs.subscribe(data => {
               for (let i = message_count; i < next.messages_count; i++) {
                 console.log(data.messages[i].body);
-                this.MessagesArray.push(data.messages[i].body);
+                //this.MessagesArray.push(data.messages[i].body);
                 let text = document.createElement("div");
                 if(data.messages[i].from===this.identity)
           {
@@ -168,6 +191,12 @@ export class MainpageComponent implements OnInit {
             text.setAttribute("class", "otherbox");
           }
                 let t = document.createTextNode(data.messages[i].body);
+              //   let name_span=document.createElement("span")
+              //   let User=JSON.parse(data.messages[i].attributes);
+              //  let name=document.createTextNode(User.name);
+                
+              //   name_span.appendChild(name)
+              //   text.appendChild(name_span)
                 text.appendChild(t);
                 document.getElementById("Container").appendChild(text);
               }
@@ -213,6 +242,36 @@ export class MainpageComponent implements OnInit {
 
     });
   }
+
+
+  public ChannelSearch()
+  {
+      this.searchresult=[];
+      if(this.text_to_search.length>=3)
+      {
+
+        let result:Array<string>=[];
+    let url = "" + this.sid + "/Channels";
+    let subs=this.chatservice.getapicall(url);
+    subs.subscribe(data=> {
+
+      let regex = new RegExp(this.text_to_search, "i");
+      data.channels.forEach(element => {
+        if (regex.test(element.unique_name)) {
+        result.push(element.unique_name);
+          console.log(element.unique_name);
+      }
+        
+      });
+     
+      
+      this.searchresult=result;
+      console.log(this.searchresult);
+    });
+  }
+  
+
+}
 
 
 }

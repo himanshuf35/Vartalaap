@@ -1,10 +1,14 @@
     
-     
+    
     <div id="chatpage">
-    <div id="sidebar" class="container-fluid"> 
-    <button (click)="channelcreation()">
-    createChannel
-    </button>
+    <div id="sidebar"> 
+       
+  
+  <br>
+  <br>
+     
+    <a (click)="channelcreation()">Add a channel<img src="assets/images/plus.png"></a>
+  
     <div *ngIf="bool">
 
       <input type="text" [(ngModel)]="inputchannelname">
@@ -13,16 +17,17 @@
       create
     </button>
   </div>
+
+  
+  
   <br>
-  <br>
-  <input type="text" [(ngModel)]="member_name">
-  <br>
-  <button (click)="JoinAChannel()">
-  join a channel
-  </button>
+  
    <br>
    <br>
    <div>
+     <div id="channel_heading">
+       #Channels
+     </div>
     <ul>
       
       <li *ngFor="let channel of channels" [id]=channel> 
@@ -40,7 +45,29 @@
     
 
     <div id="messagecontainer">
-    <div id="Container" class="container-fluid">
+      <div>
+
+        <div id="opchannel">
+          #{{opened_channel}}
+        </div>
+
+        <div id="search">
+    <input type="text" [(ngModel)]="text_to_search" (keyup)="ChannelSearch()">
+    <div *ngIf="searchresult" id="Sresult">
+    <ul>
+        <li *ngFor="let result of searchresult">
+          <a (click)="JoinAChannel(result)">
+            {{ result }}
+          </a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+          
+      </div>
+    <div id="Container">
+      
       here are we
       <ul>
       
@@ -61,3 +88,4 @@
     </div>
 
     </div>
+  

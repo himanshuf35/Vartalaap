@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { SigninComponent } from './signin/signin.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import {LoginguardGuard} from './loginguard.guard'
+//import {Renderer2} from '@angular/core';
 
 
 const routes:Routes=[
@@ -22,7 +23,7 @@ const routes:Routes=[
 {
   path:'mainpage',
   component:MainpageComponent,
-  canActivate:[LoginguardGuard]
+  // canActivate:[LoginguardGuard]
 }
 
 ]
@@ -57,7 +58,8 @@ export function getAuthServiceConfigs()
     FormsModule,
     HttpClientModule,
     SocialLoginModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    
     
 
   ],
