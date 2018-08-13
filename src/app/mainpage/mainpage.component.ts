@@ -56,6 +56,8 @@ export class MainpageComponent implements OnInit {
     this.ChannelList();
 
   }
+
+ 
   public OpenChannel(channel_name) {
     this.opened_channel=channel_name;
     document.getElementById("Container").innerHTML = "";

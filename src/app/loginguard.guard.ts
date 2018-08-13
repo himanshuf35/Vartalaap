@@ -12,7 +12,9 @@ export class LoginguardGuard implements CanActivate {
   {}
   canActivate()
   { 
-    if(this.login.isLogin())
+    let userdata=localStorage.getItem("facebookdata")
+    console.log(userdata)
+    if(userdata!==null)
     return true;
     else
     return false;

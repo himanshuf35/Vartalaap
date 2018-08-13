@@ -14,10 +14,7 @@ export class LoginserviceService {
   }
   setLogin(userdata)
   {
-     if(userdata!==null)
-     {
-         this.isLoggedIn=true;
-     }
+    
   }
   
 }

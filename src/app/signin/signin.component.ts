@@ -31,7 +31,6 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
   }
 
-
   public googlesignin() {
     this.googleauthservice.signIn(GoogleLoginProvider.PROVIDER_ID).then
       (
@@ -44,9 +43,10 @@ export class SigninComponent implements OnInit {
         this.username=userdata.name.toString();
         console.log(this.identity);
         console.log(this.username);
-        this.login.setLogin(userdata);
+        //this.login.setLogin(userdata);
 
         localStorage.setItem("facebookdata", JSON.stringify(userdata));
+        this.router.navigate(['/mainpage']);
       }
       );
 
@@ -70,6 +70,7 @@ export class SigninComponent implements OnInit {
           }
           
         });
+        
         if(!flag)
         {
                this.createUser();
@@ -77,7 +78,7 @@ export class SigninComponent implements OnInit {
         else{
           console.log("user already exist");
         }
-        this.router.navigate(['/mainpage'])
+        
 
       })
     }

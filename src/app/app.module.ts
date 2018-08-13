@@ -23,7 +23,7 @@ const routes:Routes=[
 {
   path:'mainpage',
   component:MainpageComponent,
-  // canActivate:[LoginguardGuard]
+   canActivate:[LoginguardGuard]
 }
 
 ]
