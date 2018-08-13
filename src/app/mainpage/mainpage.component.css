@@ -9,7 +9,13 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
-    text-align: right
+    text-align: right;
+    display: block; 
+    -webkit-margin-before: 1em; 
+    -webkit-margin-after: 1em;  
+     -webkit-margin-start: 0px;  
+     -webkit-margin-end: 0px;
+     word-wrap: break-word;
 }
 
 .otherbox
@@ -19,7 +25,13 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px 0;
-    text-align: left
+    text-align: left;
+    display: block; 
+    -webkit-margin-before: 1em; 
+    -webkit-margin-after: 1em;  
+     -webkit-margin-start: 0px;  
+     -webkit-margin-end: 0px;
+     word-wrap: break-word;
 }
 
 #sidebar
@@ -106,12 +118,15 @@ input[type="text"] {
     }
 
     #search{
-        width:400px;
+        width:40%;
         float: right;
     }
     #Container
     {
       margin-top:50px;
+      position: relative;
+      height:500px;
+      overflow:auto;
     }
     #Sresult
     {
@@ -128,5 +143,28 @@ input[type="text"] {
     {
         font-size: 20px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .name_span
+    {
+        text-align: left;
+        font-size:12px;
+        font-style: italic;
+    } 
+    #sendmessage
+    {
+        width:70%;
+        position: absolute;
+        margin-top:10px;
+        /* top:10px; */
+        /* bottom:10px; */
+        right:20px;
+    }
+    #message_body
+    {
+        word-wrap: break-word;
+    }
+    #addicon
+    {
+        margin-left:10px;
     }
 

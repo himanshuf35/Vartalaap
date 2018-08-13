@@ -94,7 +94,27 @@ export class SigninComponent implements OnInit {
     let sendURL = "" + this.sid + "/Users";
     let body = new HttpParams().set('Identity', this.identity).set('FriendlyName', this.username).set('ServiceSid', this.sid);
     let subs = this.chatservice.postapicall(sendURL, body);
-    subs.subscribe(data => console.log(data));
+    subs.subscribe(data => {
+      console.log(data)
+
+      let channel_id;
+      let channel_name="General"
+
+      let channel_url = "" + this.sid + "/Channels/" + channel_name;
+      let channel_sub = this.chatservice.getapicall(channel_url);
+      channel_sub.subscribe(data => {
+      channel_id = data.sid;
+
+
+      let sendURL = "" + this.sid + "/Channels/" + channel_id + "/Members";
+      let body = new HttpParams().set('Identity', this.identity).set('FriendlyName', this.username).set('ServiceSid', this.sid).set('ChannelSid', channel_id);
+      let subs = this.chatservice.postapicall(sendURL, body);
+      subs.subscribe(data => console.log(data));
+      //this.channels.push(channel_name);
+
+    });
+    
+    });
   }
 
 }

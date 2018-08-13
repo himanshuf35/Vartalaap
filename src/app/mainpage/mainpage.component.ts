@@ -5,7 +5,7 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { stringify } from 'querystring'
 import { ChatserviceService } from '../chatservice.service';
 import {ViewEncapsulation} from '@angular/core'
-import { elementStyleProp } from '../../../node_modules/@angular/core/src/render3/instructions';
+import { elementStyleProp, element } from '../../../node_modules/@angular/core/src/render3/instructions';
 import {Renderer2} from '@angular/core';
 import { BrowserDynamicTestingModule } from '../../../node_modules/@angular/platform-browser-dynamic/testing';
 
@@ -34,9 +34,10 @@ export class MainpageComponent implements OnInit {
   username: string
   bool: boolean
   messageinputbool: boolean
+  searchkeyup:boolean
+  channel_create_exist:boolean
   inputchannelname: string
   searchresult:Array<string>
-  searchkeyup:boolean
   text_to_search:string
   opened_channel:string
 
@@ -54,6 +55,7 @@ export class MainpageComponent implements OnInit {
     console.log(this.username);
     console.log(this.sid);
     this.ChannelList();
+    this.OpenChannel("General")
 
   }
 
@@ -76,26 +78,62 @@ export class MainpageComponent implements OnInit {
   }
 
   public createChannel() {
+    
+    //console.log(this.channel_create_exist);
+    let result:boolean=false;
+  let url = "" + this.sid + "/Channels";
+  let subs = this.chatservice.getapicall(url);
+  subs.subscribe(data => {
 
-    let friendly_name = "sabha";
-    let unique_name = this.inputchannelname;
-    let sendURL = "" + this.sid + "/Channels"
-    let body = new HttpParams()
-      .set('FriendlyName', friendly_name).set('UniqueName', unique_name);
-    let subs = this.chatservice.postapicall(sendURL, body);
-    subs.subscribe(data => {
-      console.log(data);
-      this.JoinAChannel(unique_name);
+    data.channels.forEach(element1 => {
+
+      if(element1.unique_name===this.inputchannelname)
+      {
+        result=true;
+      }
 
     });
+
+    if(!result)
+    {
+      let friendly_name = "sabha";
+      let unique_name = this.inputchannelname;
+      let sendURL = "" + this.sid + "/Channels"
+      let body = new HttpParams()
+        .set('FriendlyName', friendly_name).set('UniqueName', unique_name);
+      let subs = this.chatservice.postapicall(sendURL, body);
+      subs.subscribe(data => {
+        console.log(data);
+        this.JoinAChannel(unique_name);
+  
+      });
+    }
+
+    else
+    {
+      alert("Channel with this name already exist!")
+    }
+    this.bool = false;
+
+  });
+  
+   
+   
+
     //this.channels.push(unique_name);
     
-    this.bool = false;
+    
   }
+  
+
+  
 
 
 
   public JoinAChannel(channel_name) {
+
+    if(!this.joinchannelexist(channel_name))
+    {
     let channel_id;
 
     let channel_url = "" + this.sid + "/Channels/" + channel_name;
@@ -111,11 +149,16 @@ export class MainpageComponent implements OnInit {
       this.channels.push(channel_name);
 
     });
+  }
+  else
+  {
+    alert("You are already a member of this Channel");
+  }
 
   }
 
   public sendMessage() {
-    let json={'Name':this.username};
+    let json={"Name":this.username};
     let sendURL = "" + this.sid + "/Channels/" + this.open_channel_id + "/Messages";
     let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity).set('Attributes',JSON.stringify(json));
     let subs = this.chatservice.postapicall(sendURL, body);
@@ -137,6 +180,7 @@ export class MainpageComponent implements OnInit {
       let subs = this.chatservice.getapicall(sendURL);
       subs.subscribe(data => {
         data.messages.forEach(element => {
+          console.log(element);
           console.log(element.body)
           //this.MessagesArray.push(element.body);
           let text = document.createElement("div");
@@ -151,18 +195,28 @@ export class MainpageComponent implements OnInit {
           }
           
          // text.setAttribute("style","")
-         let name_span=document.createElement("span")
-         //console.log(element.attributes);
-         //let User=JSON.parse(element.attributes);
-        //  let name=document.createTextNode(element.attributes);
-        //   name_span.appendChild(name)
-        //   text.appendChild(name_span)
-          let t = document.createTextNode(element.body);
-          text.appendChild(t);
+         
+         console.log(element.attributes);
+         let User=JSON.parse(element.attributes);
+         console.log(User.Name);
+
+         let body_span=document.createElement("div")
+         let t = document.createTextNode(element.body);
+         body_span.appendChild(t);
+         body_span.setAttribute("class","message_body");
+ 
+           let name_span=document.createElement("div")
+           let name=document.createTextNode(User.Name);
+           name_span.appendChild(name);
+           name_span.setAttribute("class","name_span");
+
+           text.appendChild(name_span)
+          text.appendChild(body_span);
           document.getElementById("Container").appendChild(text);
         });
        
       });
+
 
 
     });
@@ -192,15 +246,23 @@ export class MainpageComponent implements OnInit {
           {
             text.setAttribute("class", "otherbox");
           }
-                let t = document.createTextNode(data.messages[i].body);
-              //   let name_span=document.createElement("span")
-              //   let User=JSON.parse(data.messages[i].attributes);
-              //  let name=document.createTextNode(User.name);
-                
-              //   name_span.appendChild(name)
-              //   text.appendChild(name_span)
-                text.appendChild(t);
-                document.getElementById("Container").appendChild(text);
+          console.log(data.messages[i].attributes);
+          let User=JSON.parse(data.messages[i].attributes);
+          console.log(User.Name);
+ 
+          let body_span=document.createElement("div")
+          let t = document.createTextNode(data.messages[i].body);
+          body_span.appendChild(t);
+          body_span.setAttribute("class","message_body");
+  
+            let name_span=document.createElement("div")
+            let name=document.createTextNode(User.Name);
+            name_span.appendChild(name);
+            name_span.setAttribute("class","name_span");
+ 
+            text.appendChild(name_span)
+           text.appendChild(body_span);
+           document.getElementById("Container").appendChild(text);
               }
               message_count = next.messages_count
               
@@ -274,6 +336,25 @@ export class MainpageComponent implements OnInit {
   
 
 }
+
+public channelexist(exist_channel)
+{
+ 
+}
+
+public joinchannelexist(join_channel)
+{
+  let result:boolean=false;
+    this.channels.forEach(element => {
+      if(element===join_channel)
+      {
+        result=true;
+      }
+      
+    });
+    return result;
+}
+
 
 
 }
