@@ -4,34 +4,32 @@
 
 .mybox
 {
-    border: 2px solid #dedede;
-    background-color: #cccccc;
-    border-radius: 5px;
+    background-color: #4dace2c0;
+    width: 50%;
+    border-radius: 15px;
     padding: 10px;
     margin: 10px 0;
+    margin-left: 48%;
+    color: white;
     text-align: right;
-    display: block; 
-    -webkit-margin-before: 1em; 
-    -webkit-margin-after: 1em;  
-     -webkit-margin-start: 0px;  
-     -webkit-margin-end: 0px;
      word-wrap: break-word;
 }
 
 .otherbox
 {
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
-    border-radius: 5px;
+    /* background-color: #4dace2c0; */
+    width: 50%;
+    border-radius: 15px;
     padding: 10px;
     margin: 10px 0;
-    text-align: left;
-    display: block; 
-    -webkit-margin-before: 1em; 
-    -webkit-margin-after: 1em;  
-     -webkit-margin-start: 0px;  
-     -webkit-margin-end: 0px;
+    /* margin-left: 280px; */
+    /* color: white; */
+    /* text-align: right; */
      word-wrap: break-word;
+     background-color: rgba(243, 240, 240, 0.712);
+     margin-left: 20px;
+     text-align: left;
+     color: black
 }
 
 #sidebar
@@ -102,7 +100,7 @@ input[type="text"] {
     border: 1px solid #d1d1d1;
     font: bold 12px Arial,Helvetica,Sans-serif;
     color: #bebebe;
-    width: 100%;
+    width: 75%;
     padding: 6px 15px;
     /* -webkit-border-radius: 20px;
     -moz-border-radius: 20px; */
@@ -118,6 +116,8 @@ input[type="text"] {
     }
 
     #search{
+        /* position: absolute; */
+        right:10px;
         width:40%;
         float: right;
     }
@@ -130,9 +130,17 @@ input[type="text"] {
     }
     #Sresult
     {
+        position: relative;
        background-color:white;
-       border:1px solid;
+       margin-top:21px;
+       width:100%;
+       /* border:1px solid #ccc; */
+       /* border:1px solid; */
     } 
+    /* #Sresult ul
+    {
+       list
+    } */
     #opchannel
     {
        float:left;
@@ -166,5 +174,38 @@ input[type="text"] {
     #addicon
     {
         margin-left:10px;
+    }
+    #username
+    {
+       font-size: 25px;
+       font-family: Arial, Helvetica, sans-serif;
+    }
+    #userimage
+    {
+        margin-top:10px;
+        margin-bottom:10px;
+        margin-right:10px;
+    }
+    .btn btn-primary
+    {
+        height:28px;
+    }
+    .but
+    {
+        margin-left:5px;
+    }
+    .side
+    {
+        margin-top:5px;
+    }
+    #addicon
+    {
+        position: relative;
+    }
+    #logout
+    {
+        position: absolute;
+        top:1%;
+        right:1%;
     }
 

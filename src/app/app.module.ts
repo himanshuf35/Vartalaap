@@ -8,22 +8,30 @@ import {GoogleLoginProvider,AuthServiceConfig, SocialLoginModule} from "angular-
 import {HttpClientModule} from '@angular/common/http';
 import { SigninComponent } from './signin/signin.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
-import {LoginguardGuard} from './loginguard.guard'
+import {LoginguardGuard} from './loginguard.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 //import {Renderer2} from '@angular/core';
 
 
 const routes:Routes=[
-  {path:'',
-  component:SigninComponent
-},
-{
-  path:'signin',
-  component:SigninComponent
-},
-{
+  {
   path:'mainpage',
   component:MainpageComponent,
    canActivate:[LoginguardGuard]
+},
+{
+  path:'',
+  component:SigninComponent
+},
+
+{
+path:'',
+pathMatch:'full',
+redirectTo:''
+},
+{
+  path:'**',
+  component:PageNotFoundComponent
 }
 
 ]
@@ -51,7 +59,8 @@ export function getAuthServiceConfigs()
   declarations: [
     AppComponent,
     SigninComponent,
-    MainpageComponent
+    MainpageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

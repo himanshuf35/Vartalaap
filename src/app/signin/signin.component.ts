@@ -29,6 +29,10 @@ export class SigninComponent implements OnInit {
   constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router,private login:LoginserviceService) { }
 
   ngOnInit() {
+    if(localStorage.getItem("facebookdata"))
+    {
+      this.router.navigate(['/mainpage'])
+    }
   }
 
   public googlesignin() {

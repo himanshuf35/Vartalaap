@@ -8,6 +8,7 @@ import {ViewEncapsulation} from '@angular/core'
 import { elementStyleProp, element } from '../../../node_modules/@angular/core/src/render3/instructions';
 import {Renderer2} from '@angular/core';
 import { BrowserDynamicTestingModule } from '../../../node_modules/@angular/platform-browser-dynamic/testing';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-mainpage',
@@ -18,7 +19,7 @@ import { BrowserDynamicTestingModule } from '../../../node_modules/@angular/plat
 })
 export class MainpageComponent implements OnInit {
 
-  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService) 
+  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router) 
   { 
     
   }
@@ -80,6 +81,26 @@ export class MainpageComponent implements OnInit {
   public createChannel() {
     
     //console.log(this.channel_create_exist);
+    
+    
+    console.log(this.inputchannelname)
+    if(this.inputchannelname===undefined)
+    {
+        alert("Cannot create an empty Channel")
+    }
+
+    else
+    {
+
+    this.inputchannelname=this.inputchannelname.replace(/^\s+/g, '');
+    console.log
+    if(this.inputchannelname.length==0)
+    {
+      alert("Cannot create an empty Channel")
+    }
+
+    else
+    {
     let result:boolean=false;
   let url = "" + this.sid + "/Channels";
   let subs = this.chatservice.getapicall(url);
@@ -116,6 +137,8 @@ export class MainpageComponent implements OnInit {
     this.bool = false;
 
   });
+}
+}
   
    
    
@@ -158,11 +181,27 @@ export class MainpageComponent implements OnInit {
   }
 
   public sendMessage() {
+
+    if(this.message===undefined)
+    {
+      alert("Please enter something first to send!")
+    }
+    else
+    {
+      this.message=this.message.replace(/^\s+/g, '');
+      if(this.message.length==0)
+      {
+        alert("Cannot send an empty string");
+      }
+      else
+      {
     let json={"Name":this.username};
     let sendURL = "" + this.sid + "/Channels/" + this.open_channel_id + "/Messages";
     let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity).set('Attributes',JSON.stringify(json));
     let subs = this.chatservice.postapicall(sendURL, body);
     subs.subscribe(data => console.log(data));
+    }
+  }
   }
 
   public showMessages(channel_id) {
@@ -353,6 +392,12 @@ public joinchannelexist(join_channel)
       
     });
     return result;
+}
+
+public logout()
+{
+  localStorage.removeItem("facebookdata");
+  this.router.navigate(['/'])
 }
 
 
