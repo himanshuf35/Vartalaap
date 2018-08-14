@@ -10,6 +10,7 @@ import { SigninComponent } from './signin/signin.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import {LoginguardGuard} from './loginguard.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 //import {Renderer2} from '@angular/core';
 
 
@@ -68,6 +69,7 @@ export function getAuthServiceConfigs()
     HttpClientModule,
     SocialLoginModule,
     RouterModule.forRoot(routes),
+    Ng4LoadingSpinnerModule.forRoot()
     
     
 

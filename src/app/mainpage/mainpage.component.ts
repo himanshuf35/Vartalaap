@@ -9,6 +9,7 @@ import { elementStyleProp, element } from '../../../node_modules/@angular/core/s
 import {Renderer2} from '@angular/core';
 import { BrowserDynamicTestingModule } from '../../../node_modules/@angular/platform-browser-dynamic/testing';
 import {Router} from '@angular/router'
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-mainpage',
@@ -19,7 +20,8 @@ import {Router} from '@angular/router'
 })
 export class MainpageComponent implements OnInit {
 
-  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router) 
+  constructor(private googleauthservice: AuthService, private chatservice: ChatserviceService,private router:Router
+  ,private spinnerService: Ng4LoadingSpinnerService) 
   { 
     
   }
@@ -47,6 +49,7 @@ export class MainpageComponent implements OnInit {
 
 
   ngOnInit() {
+    this.spinnerService.show();
     let data = JSON.parse(localStorage.getItem('facebookdata'));
 
     this.identity = data.id;
@@ -59,11 +62,14 @@ export class MainpageComponent implements OnInit {
     console.log(this.sid);
     this.ChannelList();
     this.OpenChannel("General")
+    //this.spinnerService.hide();
 
   }
 
  
   public OpenChannel(channel_name) {
+  
+    this.spinnerService.show();
     this.opened_channel=channel_name;
     document.getElementById("Container").innerHTML = "";
     let url = "" + this.sid + "/Channels/" + channel_name;
@@ -71,6 +77,7 @@ export class MainpageComponent implements OnInit {
     subs.subscribe(data => {
       this.open_channel_id = data.sid;
       this.showMessages(data.sid);
+      //this.spinnerService.hide();
       this.messageinputbool = true;
 
     });
