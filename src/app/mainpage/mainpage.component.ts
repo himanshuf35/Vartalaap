@@ -41,6 +41,7 @@ export class MainpageComponent implements OnInit {
   searchresult:Array<string>
   text_to_search:string
   opened_channel:string
+  user_image:string
 
 
 
@@ -50,6 +51,7 @@ export class MainpageComponent implements OnInit {
 
     this.identity = data.id;
     this.username = data.name;
+    this.user_image=data.image;
     this.sid = localStorage.getItem('sid');
 
     console.log(this.identity);
@@ -124,6 +126,7 @@ export class MainpageComponent implements OnInit {
         .set('FriendlyName', friendly_name).set('UniqueName', unique_name);
       let subs = this.chatservice.postapicall(sendURL, body);
       subs.subscribe(data => {
+        this.inputchannelname="";
         console.log(data);
         this.JoinAChannel(unique_name);
   
@@ -169,6 +172,7 @@ export class MainpageComponent implements OnInit {
       let body = new HttpParams().set('Identity', this.identity).set('FriendlyName', this.username).set('ServiceSid', this.sid).set('ChannelSid', channel_id);
       let subs = this.chatservice.postapicall(sendURL, body);
       subs.subscribe(data => console.log(data));
+      this.text_to_search=""
       this.channels.push(channel_name);
 
     });
@@ -180,7 +184,10 @@ export class MainpageComponent implements OnInit {
 
   }
 
-  public sendMessage() {
+  public sendMessage(event:any) {
+
+    if(event.keyCode == 13)
+    {
 
     if(this.message===undefined)
     {
@@ -199,10 +206,18 @@ export class MainpageComponent implements OnInit {
     let sendURL = "" + this.sid + "/Channels/" + this.open_channel_id + "/Messages";
     let body = new HttpParams().set('ServiceSid', this.sid).set('ChannelSid', this.open_channel_id).set('Body', this.message).set('From',this.identity).set('Attributes',JSON.stringify(json));
     let subs = this.chatservice.postapicall(sendURL, body);
-    subs.subscribe(data => console.log(data));
+    subs.subscribe(
+      data => {
+        this.message="";
+        console.log(data)
+
+      }
+      
+    );
     }
   }
   }
+}
 
   public showMessages(channel_id) {
     let message_count

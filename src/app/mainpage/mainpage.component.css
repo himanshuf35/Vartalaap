@@ -208,4 +208,8 @@ input[type="text"] {
         top:1%;
         right:1%;
     }
+    .aicon
+    {
+        cursor:pointer;
+    }
 

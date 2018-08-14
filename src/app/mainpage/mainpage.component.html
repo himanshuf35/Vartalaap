@@ -13,7 +13,7 @@
     </div>
 
     <div id="userimage">
-         <img src="https://lh4.googleusercontent.com/--WgmSD_-7kI/AAAAAAAAAAI/AAAAAAAAAAA/AAnnY7pzg985NM__rUDSTXvNl0fyyVCOyw/s96-c/photo.jpg">
+         <img [src]=user_image>
     </div>
 
    </div>
@@ -21,11 +21,11 @@
 
   <div>
      
-    <a (click)="channelcreation()">Add a channel<img id="addicon"src="assets/images/plus.png"></a>
+    <a class="aicon"(click)="channelcreation()">Add a channel<img id="addicon"src="assets/images/plus.png"></a>
   
     <div *ngIf="bool" class="side">
 
-      <input type="text" [(ngModel)]="inputchannelname">
+      <input type="text" placeholder="Create Channel" [(ngModel)]="inputchannelname">
     <!-- <button  class="btn btn-primary" (click)="createChannel()"> -->
       <a class="but" id="addicon" (click)="createChannel()"><i class="fa fa-plus fa-2x"></i></a>
     
@@ -46,7 +46,7 @@
     <ul>
       
       <li *ngFor="let channel of channels" [id]=channel> 
-        <a (click)="OpenChannel(channel)">#{{channel}}</a>
+        <a class="aicon"(click)="OpenChannel(channel)">#{{channel}}</a>
       </li>
     </ul>
   </div>
@@ -68,11 +68,11 @@
 
         <div id="search">
           <div id="searchbox">
-    <input type="text" [(ngModel)]="text_to_search" (keyup)="ChannelSearch()">
+    <input type="text" placeholder="Search Channels" [(ngModel)]="text_to_search" (keyup)="ChannelSearch()">
     <div *ngIf="searchresult" id="Sresult">
     <ul>
         <li *ngFor="let result of searchresult">
-          <a (click)="JoinAChannel(result)">
+          <a class="aicon"(click)="JoinAChannel(result)">
             {{ result }}
           </a>
         </li>
@@ -82,7 +82,7 @@
 
       <div id="logout">
           <span>LogOut</span>
-        <a (click)="logout()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
+        <a class="aicon"(click)="logout()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
       </div>
      
 
@@ -104,9 +104,9 @@
     </div>
     <br>
     <div id="sendmessage">
-    <input type="text" [(ngModel)]="message"> 
+    <input type="text" placeholder="Enter Message to send" [(ngModel)]="message" (keydown)="sendMessage($event)"> 
     <!-- <button class="btn btn-primary" (click)="sendMessage()">Send</button> -->
-    <a class="but"(click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
+    <a class="but"><i class="fa fa-paper-plane" aria-hidden="true"></i></a>
     </div>
 
     </div>

@@ -50,11 +50,8 @@ export class SigninComponent implements OnInit {
         //this.login.setLogin(userdata);
 
         localStorage.setItem("facebookdata", JSON.stringify(userdata));
-        this.router.navigate(['/mainpage']);
-      }
-      );
-
-    let url = "";
+        //this.router.navigate(['/mainpage']);
+        let url = "";
     let subs = this.chatservice.getapicall(url);
     subs.subscribe(data => {
       console.log(data.services[0].sid)
@@ -64,7 +61,7 @@ export class SigninComponent implements OnInit {
       let userURL=""+this.sid+"/Users";
       let cuser=this.chatservice.getapicall(userURL);
       cuser.subscribe(data=>{
-        let flag:boolean
+        let flag:boolean=false;
         data.users.forEach(element => {
           
 
@@ -74,20 +71,28 @@ export class SigninComponent implements OnInit {
           }
           
         });
+        console.log(flag);
         
         if(!flag)
         {
                this.createUser();
         }
         else{
+          this.router.navigate(['/mainpage']);
           console.log("user already exist");
         }
         
-
+         
       })
     }
     
     );
+
+
+      }
+      );
+
+    
     //this.createUser();
     
   }
@@ -114,6 +119,7 @@ export class SigninComponent implements OnInit {
       let body = new HttpParams().set('Identity', this.identity).set('FriendlyName', this.username).set('ServiceSid', this.sid).set('ChannelSid', channel_id);
       let subs = this.chatservice.postapicall(sendURL, body);
       subs.subscribe(data => console.log(data));
+      this.router.navigate(['/mainpage']);
       //this.channels.push(channel_name);
 
     });
